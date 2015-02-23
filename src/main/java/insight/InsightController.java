@@ -18,7 +18,7 @@ public class InsightController {
             connection = getConnection();
 
             Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM customers where crn = " + crn);
+            ResultSet rs = stmt.executeQuery("SELECT firstname, lastname, number_accounts FROM customers where crn = '" + crn + "'");
 
             customer.setCrn(crn);
             customer.setFirstName(rs.getString("firstname"));
