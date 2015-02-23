@@ -1,8 +1,6 @@
-# java-getting-started
+# insight
 
-A barebones Java app, which can easily be deployed to Heroku.
-
-This application support the [Getting Started with Java on Heroku](https://devcenter.heroku.com/articles/getting-started-with-java) article - check it out.
+Insight Server and Angular UI.
 
 ## Running Locally
 
@@ -10,7 +8,7 @@ Make sure you have Java and Maven installed.  Also, install the [Heroku Toolbelt
 
 ```sh
 $ git clone https://github.com/markmo/insight.git
-$ cd java-getting-started
+$ cd insight
 $ mvn install
 $ foreman start web
 ```
@@ -30,4 +28,3 @@ $ heroku open
 For more information about using Java on Heroku, see these Dev Center articles:
 
 - [Java on Heroku](https://devcenter.heroku.com/categories/java)
-
