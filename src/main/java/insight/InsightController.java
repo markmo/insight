@@ -21,6 +21,7 @@ public class InsightController {
             ResultSet rs = stmt.executeQuery("SELECT firstname, lastname, number_accounts FROM customers where crn = '" + crn + "'");
 
             customer.setCrn(crn);
+            rs.next();
             customer.setFirstName(rs.getString("firstname"));
             customer.setLastName(rs.getString("lastname"));
             customer.setNumberAccounts(rs.getInt("number_accounts"));
