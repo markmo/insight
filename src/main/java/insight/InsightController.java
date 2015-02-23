@@ -1,7 +1,7 @@
 package insight;
 
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -10,8 +10,8 @@ import java.sql.*;
 @RestController
 public class InsightController {
 
-    @RequestMapping("/customer")
-    public Customer customer(@RequestParam(value="crn", defaultValue="123") String crn) {
+    @RequestMapping("/customer/{crn}")
+    public Customer customer(@PathVariable String crn) {
         Customer customer = new Customer();
         Connection connection = null;
         try {
