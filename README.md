@@ -1,6 +1,6 @@
 # java-getting-started
 
-A barebones Java app, which can easily be deployed to Heroku.  
+A barebones Java app, which can easily be deployed to Heroku.
 
 This application support the [Getting Started with Java on Heroku](https://devcenter.heroku.com/articles/getting-started-with-java) article - check it out.
 
@@ -9,7 +9,7 @@ This application support the [Getting Started with Java on Heroku](https://devce
 Make sure you have Java and Maven installed.  Also, install the [Heroku Toolbelt](https://toolbelt.heroku.com/).
 
 ```sh
-$ git clone https://github.com/heroku/java-getting-started.git
+$ git clone https://github.com/markmo/insight.git
 $ cd java-getting-started
 $ mvn install
 $ foreman start web

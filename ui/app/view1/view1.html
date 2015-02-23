@@ -1,0 +1,16 @@
+<div ng-controller="View1Ctrl">
+  CRN: <input ng-model="crn" ng-blur="updateCustomer($event)">
+  <br><br>
+  <accordion close-others="oneAtATime">
+    <accordion-group heading="Customer Information" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+      <table>
+        <tbody>
+          <tr ng-repeat="(key, value) in data">
+            <td class="key">{{key | readable}}</td>
+            <td>{{value}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </accordion-group>
+  </accordion>
+</div>
