@@ -1,1 +1,1 @@
-web:    java -cp target/classes:target/dependency/* insight/Application
+web: java -Dserver.port=$PORT -jar target/helloworld-0.0.1-SNAPSHOT.jar
