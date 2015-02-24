@@ -16,8 +16,8 @@ import org.json.JSONException;
 public class InsightController {
 
     @RequestMapping("/customer/{crn}")
-    public Customer customer(@PathVariable String crn) {
-        Customer customer = new Customer();
+    public JSONArray customer(@PathVariable String crn) {
+        JSONArray json = new JSONArray();
         Connection connection = null;
         try {
             connection = getConnection();
@@ -32,7 +32,6 @@ public class InsightController {
 
             ResultSet rs = stmt.executeQuery("select crn, title, firstname, lastname, after_hours_phone, email, street_number, street_name, cu.suburb, state, customer_type, gender, marital_status, nab_segment, is_nab_main_bank, retail_customer_rating, ib_activity, cc_activity, branch_activity, nab_atm_activity, num_dd_competitors, num_competitor_debits, value_competitor_debits, most_recent_competitor, total_most_recent_comp_debits, most_recent_comp_debit_dt, most_recent_comp_debit_value, second_recent_competitor, total_second_competitor_debits, second_comp_debit_dt, second_comp_debit_value, num_siebel_contacts, most_recent_siebel_response, siebel_activity_code, num_previous_ecl_applications, most_recent_comp_debit_dt, most_recent_product_applied, most_recent_prod_app_decision, occupation_cd, num_salary_credits, salary_credits_value, employer_from_application, primary_employer_from_credits, secondary_employer, median_sale_price, average_tom, median_rent, annual_growth_percent, three_year_growth_percent from customers cu join rpdata rp on rp.suburb = cu.suburb where crn = '" + crn + "'");
 
-            JSONArray json = new JSONArray();
             JSONObject obj = new JSONObject();
             ResultSetMetaData metadata = rs.getMetaData();
             int k = metadata.getColumnCount();
@@ -68,7 +67,7 @@ public class InsightController {
         } finally {
             if (connection != null) try{connection.close();} catch(SQLException e){}
         }
-        return customer;
+        return json;
     }
 
     private Connection getConnection() throws URISyntaxException, SQLException {
