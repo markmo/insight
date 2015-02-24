@@ -61,7 +61,7 @@ public class InsightController {
                     obj.put(displayName, rs.getString(columnName));
                 }
             }
-            json.put(obj);
+            json.put(currentSection, obj);
 
         } catch (Exception e) {
             e.printStackTrace();
