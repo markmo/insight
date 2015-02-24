@@ -16,7 +16,7 @@ import org.json.JSONException;
 public class InsightController {
 
     @RequestMapping("/customer/{crn}")
-    public JSONArray customer(@PathVariable String crn) {
+    public String customer(@PathVariable String crn) {
         JSONArray json = new JSONArray();
         Connection connection = null;
         try {
@@ -67,7 +67,7 @@ public class InsightController {
         } finally {
             if (connection != null) try{connection.close();} catch(SQLException e){}
         }
-        return json;
+        return json.toString();
     }
 
     private Connection getConnection() throws URISyntaxException, SQLException {
