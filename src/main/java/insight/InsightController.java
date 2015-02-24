@@ -17,7 +17,7 @@ public class InsightController {
 
     @RequestMapping("/customer/{crn}")
     public String customer(@PathVariable String crn) {
-        JSONArray json = new JSONArray();
+        JSONObject json = new JSONObject();
         Connection connection = null;
         try {
             connection = getConnection();
@@ -36,6 +36,7 @@ public class InsightController {
             ResultSetMetaData metadata = rs.getMetaData();
             int k = metadata.getColumnCount();
             String currentSection = "";
+            boolean first = true;
             rs.next();
             for (int i = 1; i <= k; i++) {
                 String columnName = metadata.getColumnName(i);
@@ -45,7 +46,8 @@ public class InsightController {
                     currentSection = "";
                 } else {
                     if (!currentSection.equals(labels[0])) {
-                        json.put(obj);
+                        if (!first) json.put(currentSection, obj);
+                        first = false;
                         obj = new JSONObject();
                         currentSection = labels[0];
                     }
