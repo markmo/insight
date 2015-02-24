@@ -35,7 +35,7 @@ public class InsightController {
             JSONObject obj = new JSONObject();
             ResultSetMetaData metadata = rs.getMetaData();
             int k = metadata.getColumnCount();
-            String currentSection = null;
+            String currentSection = "";
             rs.next();
             for (int i = 1; i <= k; i++) {
                 String columnName = metadata.getColumnName(i);
