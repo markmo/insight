@@ -44,7 +44,7 @@ angular.module('myApp.view1', ['ngRoute'])
 
   $scope.updateCustomer = function ($event) {
     // refactor to service
-    $http.get('https://blooming-harbor-2517.herokuapp.com/customer/' + $scope.crn).
+    $http.get('https://smeinsights.herokuapp.com/customer/' + $scope.crn).
       success(function(data) {
         var sections = [];
         for (var i = 0; i < data.length; i++) {
