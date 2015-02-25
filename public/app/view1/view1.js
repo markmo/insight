@@ -35,7 +35,7 @@ angular.module('myApp.view1', ['ngRoute'])
 
 .controller('View1Ctrl', function($scope, $http) {
 
-  $scope.oneAtATime = true;
+  $scope.oneAtATime = false;
 
   $scope.status = {
     isFirstOpen: true,
@@ -46,7 +46,23 @@ angular.module('myApp.view1', ['ngRoute'])
     // refactor to service
     $http.get('https://blooming-harbor-2517.herokuapp.com/customer/' + $scope.crn).
       success(function(data) {
-        $scope.data = data;
+        var sections = [];
+        for (var i = 0; i < data.length; i++) {
+          var section = data[i];
+          var fieldlist = [];
+          for (var sectionName in section) {
+            var fields = section[sectionName];
+            for (var j = 0; j < fields.length; j++) {
+              var field = fields[j];
+              for (var fieldName in field) {
+                var val = field[fieldName];
+                fieldlist.push([fieldName, val]);
+              }
+            }
+          }
+          sections.push([sectionName, fieldlist]);
+        }
+        $scope.data = sections;
       });
   }
 })

@@ -2,12 +2,12 @@
   CRN: <input ng-model="crn" ng-blur="updateCustomer($event)">
   <br><br>
   <accordion close-others="oneAtATime">
-    <accordion-group heading="Customer Information" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+    <accordion-group ng-repeat="section in data" heading="{{section[0]}}">
       <table>
         <tbody>
-          <tr ng-repeat="(key, value) in data">
-            <td class="key">{{key | readable}}</td>
-            <td>{{value}}</td>
+          <tr ng-repeat="field in section[1]">
+            <td class="key">{{field[0]}}</td>
+            <td>{{field[1]}}</td>
           </tr>
         </tbody>
       </table>
