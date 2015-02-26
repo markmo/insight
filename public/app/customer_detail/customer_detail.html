@@ -1,8 +1,8 @@
-<div ng-controller="View1Ctrl">
+<div ng-controller="CustomerDetailCtrl">
   CRN: <input ng-model="crn" ng-blur="updateCustomer($event)">
   <br><br>
   <accordion close-others="oneAtATime">
-    <accordion-group ng-repeat="section in data" heading="{{section[0]}}">
+    <accordion-group ng-repeat="section in data" heading="{{section[0]}}"><!-- is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled" -->
       <table>
         <tbody>
           <tr ng-repeat="field in section[1]">
