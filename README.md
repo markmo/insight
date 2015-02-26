@@ -16,7 +16,7 @@ The following build dependencies are required:
 To run the Java service tier, checkout the code, build and run:
 
 ```sh
-$ git clone https://github.com/markmo/insight.git
+$ git clone http://mmoloney@stash.dsa.rocks/scm/nsi/insight.git
 $ cd insight
 $ mvn install
 $ foreman start web
