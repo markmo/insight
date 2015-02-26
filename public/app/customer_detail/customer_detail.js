@@ -24,7 +24,7 @@ function readable(str) {
   return output;
 }
 
-angular.module('insight.customer_detail', ['ngRoute'])
+angular.module('insight.customer_detail', ['ngRoute', 'uiGmapgoogle-maps'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/customer', {
@@ -33,12 +33,22 @@ angular.module('insight.customer_detail', ['ngRoute'])
   });
 }])
 
+.config(function (uiGmapGoogleMapApiProvider) {
+    uiGmapGoogleMapApiProvider.configure({
+        key: 'AIzaSyB_8MC32Vj_kA6UvpSNOfz4Zv8A9T42LmY',
+        v: '3.17',
+        libraries: 'weather,geometry,visualization'
+    });
+})
+
 .factory('CustomerSvc', function ($http, $log, $q) {
   return {
     getCustomer: function (crn) {
       var dfd = $q.defer();
       $http.get('https://smeinsights.herokuapp.com/customer/' + crn)
-        .success(function(data) {
+        .success(function (data) {
+          var customer = {};
+          var address = {};
           var sections = [];
           for (var i = 0; i < data.length; i++) {
             var section = data[i];
@@ -49,13 +59,31 @@ angular.module('insight.customer_detail', ['ngRoute'])
                 var field = fields[j];
                 for (var fieldName in field) {
                   var val = field[fieldName];
-                  fieldlist.push([fieldName, val]);
+                  if (sectionName === 'Main') {
+                    customer[fieldName] = val;
+                  } else {
+                    fieldlist.push([fieldName, val]);
+                  }
+                  if (sectionName === 'Customer Contact Details') {
+                    address[fieldName] = val;
+                  }
                 }
               }
             }
-            sections.push([sectionName, fieldlist]);
+            if (sectionName !== 'Main') {
+              sections.push([sectionName, fieldlist]);
+            }
           }
-          dfd.resolve(sections);
+          var addr = address['Street Number'] + ' ' + address['Street'] + ', ' + address['Suburb'] + ' ' + address['State'];
+          $http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + addr)
+            .success(function (data) {
+              dfd.resolve({
+                customer: customer,
+                address: addr,
+                location: data.results[0].geometry.location,
+                sections: sections
+              });
+            });
         })
         .error(function (msg, code) {
           dfd.reject(msg);
@@ -66,25 +94,36 @@ angular.module('insight.customer_detail', ['ngRoute'])
   };
 })
 
-.controller('CustomerDetailCtrl', function ($log, $scope, CustomerSvc) {
+.controller('CustomerDetailCtrl', function ($log, $scope, CustomerSvc, uiGmapGoogleMapApi) {
 
   $scope.oneAtATime = false;
 
-  $scope.status = {
-    isFirstOpen: true,
-    isFirstDisabled: false
+  $scope.opened = function (event) {
+    event.currentTarget.parentNode.parentNode.parentNode.classList.toggle('open');
   };
+
+  $scope.marker = {coords: {latitude: 0, longitue: 0}};
 
   $scope.updateCustomer = function ($event) {
     CustomerSvc.getCustomer($scope.crn).then(
       function (data) {
-        $scope.data = data;
+        var customer = data.customer;
+        $scope.fullname = customer['Title'] + ' ' + customer['First Name'] + ' ' + customer['Last Name'];
+        $scope.crn = customer['CRN'];
+        $scope.data = data.sections;
+
+        uiGmapGoogleMapApi.then(function (maps) {
+          var coords = {latitude: data.location.lat, longitude: data.location.lng};
+          $scope.map = {center: coords, zoom: 15};
+          $scope.marker = {coords: coords};
+        });
+
       },
       function (err) {
         $log.error('failure loading customer with CRN: ' + $scope.crn, err);
       }
     );
-  }
+  };
 })
 
 .filter('readable', function () {

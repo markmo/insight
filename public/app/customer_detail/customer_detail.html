@@ -1,8 +1,13 @@
 <div ng-controller="CustomerDetailCtrl">
   CRN: <input ng-model="crn" ng-blur="updateCustomer($event)">
-  <br><br>
+  <h1>{{fullname}}</h1>
+  <div>Customer Number: {{crn}}</div>
+  <br>
   <accordion close-others="oneAtATime">
-    <accordion-group ng-repeat="section in data" heading="{{section[0]}}"><!-- is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled" -->
+    <accordion-group ng-repeat="section in data">
+      <accordion-heading>
+        <span ng-click="opened($event)">{{section[0]}}</span>
+      </accordion-heading>
       <table>
         <tbody>
           <tr ng-repeat="field in section[1]">
@@ -13,4 +18,7 @@
       </table>
     </accordion-group>
   </accordion>
+  <ui-gmap-google-map center='map.center' zoom='map.zoom'>
+    <ui-gmap-marker idKey="1" coords="marker.coords"></ui-gmap-marker>
+  </ui-gmap-google-map>
 </div>

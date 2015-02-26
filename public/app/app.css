@@ -32,3 +32,10 @@
 .key {
   padding-right: 10px;
 }
+
+.angular-google-map-container { height: 400px; }
+
+.panel-default > .panel-heading.open {
+  background-color: rgba(206, 29, 33, 0.9);
+  color: #f8f8f8;
+}
