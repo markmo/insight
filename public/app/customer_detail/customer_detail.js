@@ -24,14 +24,14 @@ function readable(str) {
   return output;
 }
 
-angular.module('insight.customer_detail', ['ngRoute', 'uiGmapgoogle-maps'])
+angular.module('customer_detail', [/*'ngRoute', */'uiGmapgoogle-maps'])
 
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/customer', {
-    templateUrl: 'customer_detail/customer_detail.html',
-    controller: 'CustomerDetailCtrl'
-  });
-}])
+// .config(['$routeProvider', function ($routeProvider) {
+//   $routeProvider.when('/customer', {
+//     templateUrl: 'customer_detail/customer_detail.html',
+//     controller: 'CustomerDetailCtrl'
+//   });
+// }])
 
 .config(function (uiGmapGoogleMapApiProvider) {
     uiGmapGoogleMapApiProvider.configure({
@@ -94,9 +94,11 @@ angular.module('insight.customer_detail', ['ngRoute', 'uiGmapgoogle-maps'])
   };
 })
 
-.controller('CustomerDetailCtrl', function ($log, $scope, CustomerSvc, uiGmapGoogleMapApi) {
+.controller('CustomerDetailCtrl', function ($log, $scope, CustomerSvc, uiGmapGoogleMapApi, state) {
 
   $scope.oneAtATime = false;
+
+  $scope.crn = state.crn;
 
   $scope.opened = function (event) {
     event.currentTarget.parentNode.parentNode.parentNode.classList.toggle('open');
@@ -104,7 +106,7 @@ angular.module('insight.customer_detail', ['ngRoute', 'uiGmapgoogle-maps'])
 
   $scope.marker = {coords: {latitude: 0, longitue: 0}};
 
-  $scope.updateCustomer = function ($event) {
+  $scope.updateCustomer = function () {
     CustomerSvc.getCustomer($scope.crn).then(
       function (data) {
         var customer = data.customer;
@@ -124,6 +126,10 @@ angular.module('insight.customer_detail', ['ngRoute', 'uiGmapgoogle-maps'])
       }
     );
   };
+
+  if (state.crn) {
+    $scope.updateCustomer();
+  }
 })
 
 .filter('readable', function () {

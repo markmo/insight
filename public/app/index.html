@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet">
   <link rel="stylesheet" href="app.css">
   <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
@@ -22,6 +23,28 @@
   <![endif]-->
 
   <div ng-view></div>
+
+  <nav class="sidemenu">
+    <div class="sidemenu-header">
+      <span class="sidemenu-title">IEP</span>
+    </div>
+    <div class="scrollbar">
+      <ul>
+        <li>
+          <a href="#?pane=0">
+            <i class="fa fa-user fa-lg"></i>
+            <span class="nav-text">CRM View</span>
+          </a>
+        </li>
+        <li>
+          <a href="#?pane=1">
+            <i class="fa fa-info fa-lg"></i>
+            <span class="nav-text">SME Insights</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
